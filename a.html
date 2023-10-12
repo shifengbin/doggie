@@ -1,0 +1,979 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>doggie: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">doggie/cast.go (100.0%)</option>
+				
+				<option value="file1">doggie/doggie.go (72.9%)</option>
+				
+				<option value="file2">doggie/utils.go (91.4%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package doggie
+
+import (
+        "fmt"
+        "reflect"
+
+        "github.com/spf13/cast"
+)
+
+type Caster interface {
+        // Int returns the value as an int.
+        Int() int
+        // Int8 returns the value as an int8.
+        Int8() int8
+        // Int16 returns the value as an int16.
+        Int16() int16
+        // Int32 returns the value as an int32.
+        Int32() int32
+        // Int64 return the value as an int64
+        Int64() int64
+        // Uint return the value as an uint
+        Uint() uint
+        // Int8 returns the value as an uint8.
+        Uint8() uint8
+        // Int16 returns the value as an uint16.
+        Uint16() uint16
+        // Int32 returns the value as an uint32.
+        Uint32() uint32
+        // Int64 return the value as an uint64
+        Uint64() uint64
+
+        String() string
+        Bool() bool
+        Float32() float32
+        Float64() float64
+
+        //返回map key
+        Keys() []string
+        //获取map key对应的值
+        Obj(key string) Caster
+        //map转struct
+        Unmarshal(obj interface{}) error
+
+        //获取map或者slice的length
+        Len() int
+
+        //获取slice对应值
+        Idx(idx int) Caster
+}
+
+var _ Caster = &amp;Cast{}
+
+type Cast struct {
+        value any
+}
+
+func NewCast(value any) *Cast <span class="cov8" title="1">{
+        return &amp;Cast{value: value}
+}</span>
+
+func (c *Cast) Int() int <span class="cov8" title="1">{
+        return cast.ToInt(c.value)
+}</span>
+
+func (c *Cast) Int8() int8 <span class="cov8" title="1">{
+        return cast.ToInt8(c.value)
+}</span>
+
+func (c *Cast) Int16() int16 <span class="cov8" title="1">{
+        return cast.ToInt16(c.value)
+}</span>
+
+func (c *Cast) Int32() int32 <span class="cov8" title="1">{
+        return cast.ToInt32(c.value)
+}</span>
+
+func (c *Cast) Int64() int64 <span class="cov8" title="1">{
+        return cast.ToInt64(c.value)
+}</span>
+
+func (c *Cast) Uint() uint <span class="cov8" title="1">{
+        return cast.ToUint(c.value)
+}</span>
+
+func (c *Cast) Uint8() uint8 <span class="cov8" title="1">{
+        return cast.ToUint8(c.value)
+}</span>
+
+func (c *Cast) Uint16() uint16 <span class="cov8" title="1">{
+        return cast.ToUint16(c.value)
+}</span>
+
+func (c *Cast) Uint32() uint32 <span class="cov8" title="1">{
+        return cast.ToUint32(c.value)
+}</span>
+
+func (c *Cast) Uint64() uint64 <span class="cov8" title="1">{
+        return cast.ToUint64(c.value)
+}</span>
+
+func (c *Cast) String() string <span class="cov8" title="1">{
+        return cast.ToString(c.value)
+}</span>
+
+func (c *Cast) Float32() float32 <span class="cov8" title="1">{
+        return cast.ToFloat32(c.value)
+}</span>
+
+func (c *Cast) Float64() float64 <span class="cov8" title="1">{
+        return cast.ToFloat64(c.value)
+}</span>
+
+func (c *Cast) Bool() bool <span class="cov8" title="1">{
+        return cast.ToBool(c.value)
+}</span>
+
+// Keys 如果对象是map,返回所有key
+func (c *Cast) Keys() []string <span class="cov8" title="1">{
+        m := cast.ToStringMap(c.value)
+        keys := []string{}
+        for key := range m </span><span class="cov8" title="1">{
+                keys = append(keys, key)
+        }</span>
+        <span class="cov8" title="1">return keys</span>
+}
+
+// Obj 获取map key对应的值
+func (c *Cast) Obj(key string) Caster <span class="cov8" title="1">{
+        m := cast.ToStringMap(c.value)
+        return &amp;Cast{m[key]}
+}</span>
+
+func (c *Cast) Len() int <span class="cov8" title="1">{
+        switch t := c.value.(type) </span>{
+        case map[string]interface{}:<span class="cov8" title="1">
+                return len(t)</span>
+        case []interface{}:<span class="cov8" title="1">
+                return len(t)</span>
+        default:<span class="cov8" title="1">
+                return 0</span>
+        }
+}
+
+// Idx Slice下标
+func (c *Cast) Idx(idx int) Caster <span class="cov8" title="1">{
+        s := cast.ToSlice(c.value)
+        if idx &lt; len(s) </span><span class="cov8" title="1">{
+                return &amp;Cast{s[idx]}
+        }</span>
+        <span class="cov8" title="1">return &amp;Cast{}</span>
+}
+
+func (c *Cast) Unmarshal(v interface{}) error <span class="cov8" title="1">{
+        var err error
+        switch t := c.value.(type) </span>{
+        case map[string]interface{}:<span class="cov8" title="1">
+                err = unmarshal(t, v)</span>
+        default:<span class="cov8" title="1">
+                err = fmt.Errorf("unsupport unmarsharl %s", reflect.TypeOf(v).Name())</span>
+        }
+        <span class="cov8" title="1">return err</span>
+}
+
+func (c *Cast) Value() any <span class="cov8" title="1">{
+        return c.value
+}</span>
+</pre>
+		
+		<pre class="file" id="file1" style="display: none">package doggie
+
+import (
+        "doggie/internal/decode"
+        "doggie/internal/flags"
+        "io"
+        "log"
+        "path/filepath"
+
+        "fmt"
+        "os"
+        "strings"
+        "sync/atomic"
+
+        "github.com/fsnotify/fsnotify"
+)
+
+type RemoteProvider interface {
+        //初始化执行，读取远程配置
+        SetUp() ([]byte, error)
+
+        //检测远程配置
+        Watch() ([]byte, error)
+}
+
+type Doggie struct {
+        //保存命令行参数
+        flags map[string]string
+
+        //保存默认值
+        defaults map[string]interface{}
+
+        //保存配置信息 内部也是一个map[string]interface{}, 因为需要监控变化所以需要，防止同时读写导致panic
+        config atomic.Value
+
+        //远程配置信息 内部也是一个map[string]interface{}
+        remoteConfig atomic.Value
+
+        //配置文件地址
+        configFile string
+
+        //配置文件类型，decode使用，不设置默认使用配置文件后缀
+        fileType string
+
+        //远程配置文件格式，用来decode使用, 默认json
+        remoteType string
+
+        //名称分隔符， 默认为.
+        sep string
+
+        //远程更新全部，默认为false 为增量更新
+        refreshAll bool
+
+        remoteProvider RemoteProvider
+}
+
+func New() *Doggie <span class="cov8" title="1">{
+        d := &amp;Doggie{
+                flags:        make(map[string]string),
+                defaults:     make(map[string]interface{}),
+                config:       atomic.Value{},
+                remoteConfig: atomic.Value{},
+                remoteType:   "json",
+                sep:          ".",
+        }
+        d.config.Store(make(map[string]interface{}))
+        d.remoteConfig.Store(make(map[string]interface{}))
+        return d
+}</span>
+
+// SetConfigFile 设置配置文件地址
+func (d *Doggie) SetConfigFile(fpath string) error <span class="cov8" title="1">{
+        fp, err := os.Stat(fpath)
+        if err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">if fp.IsDir() </span><span class="cov8" title="1">{
+                return fmt.Errorf("not support dir: %s", fpath)
+        }</span>
+
+        <span class="cov8" title="1">d.configFile = fpath
+
+        if d.fileType == "" </span><span class="cov8" title="1">{
+                d.fileType = strings.TrimPrefix(filepath.Ext(fpath), ".")
+        }</span>
+
+        <span class="cov8" title="1">return nil</span>
+}
+
+// SetFileType 设置配置文件类型
+func (d *Doggie) SetFileType(fileType string) <span class="cov8" title="1">{
+        d.fileType = fileType
+}</span>
+
+// SetRemoteType 设置远程配置类型
+func (d *Doggie) SetRemoteType(remoteType string) <span class="cov8" title="1">{
+        d.remoteType = remoteType
+}</span>
+
+// SetRemoteProvider 设置远程配置更新者
+// refreshAll 是否为全量更新， true为全量， false为增量
+func (d *Doggie) SetRemoteProvider(provider RemoteProvider, refreshAll bool) <span class="cov8" title="1">{
+        d.remoteProvider = provider
+        d.refreshAll = refreshAll
+}</span>
+
+// 设置默认值
+func (d *Doggie) SetDefault(key string, value interface{}) <span class="cov8" title="1">{
+        path := strings.Split(key, d.sep)
+        if len(path) == 1 </span><span class="cov8" title="1">{
+                d.defaults[key] = value
+                return
+        }</span>
+        <span class="cov8" title="1">d.defaults[key] = value
+        m := deepSearch(d.defaults, path[:len(path)-1])
+        m[path[len(path)-1]] = value</span>
+}
+
+// ReadConfig 读取配置
+func (d *Doggie) ReadConfig() error <span class="cov8" title="1">{
+        if err := d.readFlags(); err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">if err := d.readConfigFile(); err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">if err := d.readRemoteConfig(); err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+        <span class="cov8" title="1">return nil</span>
+
+}
+
+func (d *Doggie) WatchConfig(f func()) error <span class="cov8" title="1">{
+        if err := d.watchFile(f); err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">if err := d.watchRemote(f); err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">return nil</span>
+}
+
+func (d *Doggie) watchFile(f func()) error <span class="cov8" title="1">{
+        if d.configFile == "" </span><span class="cov0" title="0">{
+                return nil
+        }</span>
+
+        <span class="cov8" title="1">watcher, err := fsnotify.NewWatcher()
+        if err != nil </span><span class="cov0" title="0">{
+                log.Println("error: watch fail", err)
+                return err
+        }</span>
+
+        <span class="cov8" title="1">if err := watcher.Add(d.configFile); err != nil </span><span class="cov0" title="0">{
+                log.Println("error: add file fail", err)
+                return err
+        }</span>
+
+        <span class="cov8" title="1">go func() </span><span class="cov8" title="1">{
+                for evt := range watcher.Events </span><span class="cov0" title="0">{
+                        if evt.Has(fsnotify.Remove) </span><span class="cov0" title="0">{
+                                break</span>
+                        }
+
+                        <span class="cov0" title="0">if !evt.Has(fsnotify.Write) </span><span class="cov0" title="0">{
+                                continue</span>
+                        }
+
+                        <span class="cov0" title="0">if err := d.readConfigFile(); err != nil </span><span class="cov0" title="0">{
+                                log.Println("error: watch file error:", err)
+                                continue</span>
+                        }
+
+                        <span class="cov0" title="0">if f == nil </span><span class="cov0" title="0">{
+                                continue</span>
+                        }
+                        <span class="cov0" title="0">f()</span>
+                }
+        }()
+        <span class="cov8" title="1">return nil</span>
+}
+
+func (d *Doggie) watchRemote(f func()) error <span class="cov8" title="1">{
+        if d.remoteProvider == nil </span><span class="cov0" title="0">{
+                return nil
+        }</span>
+        <span class="cov8" title="1">go func() </span><span class="cov8" title="1">{
+                for </span><span class="cov8" title="1">{
+                        data, err := d.remoteProvider.Watch()
+                        if err != nil </span><span class="cov0" title="0">{
+                                log.Println("error: watch remote config error:", err)
+                                continue</span>
+                        }
+                        <span class="cov8" title="1">dec := decode.Get(d.remoteType)
+                        if dec == nil </span><span class="cov0" title="0">{
+                                log.Println("error: unsupport remote type:", d.remoteType)
+                                break</span>
+                        }
+                        <span class="cov8" title="1">m := make(map[string]interface{})
+                        if err := dec.Decode(data, &amp;m); err != nil </span><span class="cov0" title="0">{
+                                log.Println("error: decode error:", err)
+                                continue</span>
+                        }
+
+                        //全量更新
+                        <span class="cov8" title="1">if d.refreshAll </span><span class="cov0" title="0">{
+                                d.remoteConfig.Store(m)
+                                if f != nil </span><span class="cov0" title="0">{
+                                        f()
+                                }</span>
+                                <span class="cov0" title="0">continue</span>
+                        }
+
+                        <span class="cov8" title="1">org := d.remoteConfig.Load().(map[string]interface{})
+                        org = deepCopy(org)
+                        merge(m, org)
+                        d.remoteConfig.Store(org)
+
+                        if f == nil </span><span class="cov8" title="1">{
+                                continue</span>
+                        }
+                        <span class="cov0" title="0">f()</span>
+                }
+
+        }()
+        <span class="cov8" title="1">return nil</span>
+}
+
+func (d *Doggie) readFlags() error <span class="cov8" title="1">{
+        var err error
+        d.flags, err = flags.Parse(os.Args[1:])
+        return err
+}</span>
+
+func (d *Doggie) readConfigFile() error <span class="cov8" title="1">{
+        if d.configFile == "" </span><span class="cov8" title="1">{
+                return nil
+        }</span>
+
+        <span class="cov8" title="1">f, err := os.Open(d.configFile)
+        if err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+        <span class="cov8" title="1">defer f.Close()
+
+        data, err := io.ReadAll(f)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">dec := decode.Get(d.fileType)
+        if dec == nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("unsupported remote config type: %s", d.remoteType)
+        }</span>
+
+        <span class="cov8" title="1">m := make(map[string]interface{})
+        if err := dec.Decode(data, &amp;m); err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">d.config.Store(m)
+
+        return nil</span>
+}
+
+func (d *Doggie) readRemoteConfig() error <span class="cov8" title="1">{
+        if d.remoteProvider == nil </span><span class="cov8" title="1">{
+                return nil
+        }</span>
+
+        <span class="cov8" title="1">data, err := d.remoteProvider.SetUp()
+        if err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+
+        // 获取解码器，解析配置
+        <span class="cov8" title="1">dec := decode.Get(d.remoteType)
+        if dec == nil </span><span class="cov0" title="0">{
+                return fmt.Errorf("unsupported remote config type: %s", d.remoteType)
+        }</span>
+        <span class="cov8" title="1">m := make(map[string]interface{})
+        if err := dec.Decode(data, &amp;m); err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">d.remoteConfig.Store(m)
+        return nil</span>
+}
+
+func (d *Doggie) GetEnv(key string) Caster <span class="cov0" title="0">{
+        return NewCast(os.Getenv(key))
+}</span>
+
+func (d *Doggie) GetConfig(key string) Caster <span class="cov8" title="1">{
+        path := strings.Split(key, d.sep)
+        conf := d.config.Load().(map[string]interface{})
+        val := searchMap(conf, path)
+        return NewCast(val)
+}</span>
+
+func (d *Doggie) GetRemoteConfig(key string) Caster <span class="cov8" title="1">{
+        path := strings.Split(key, d.sep)
+        conf := d.remoteConfig.Load().(map[string]interface{})
+        val := searchMap(conf, path)
+        return NewCast(val)
+}</span>
+
+func (d *Doggie) GetFlag(key string) Caster <span class="cov8" title="1">{
+        return NewCast(d.flags[key])
+}</span>
+
+// Get 获取配置
+// 优先级：
+//
+//        flag &gt; env &gt; config &gt; remote &gt; default
+func (d *Doggie) Get(key string) Caster <span class="cov8" title="1">{
+        path := strings.Split(key, d.sep)
+        //获取flag
+        if v, ok := d.flags[key]; ok </span><span class="cov0" title="0">{
+                return NewCast(v)
+        }</span>
+
+        //获取环境变量
+        <span class="cov8" title="1">if v, ok := os.LookupEnv(key); ok </span><span class="cov0" title="0">{
+                return NewCast(v)
+        }</span>
+
+        //获取配置文件
+        <span class="cov8" title="1">conf := d.config.Load().(map[string]interface{})
+        if v := searchMap(conf, path); v != nil </span><span class="cov8" title="1">{
+                return NewCast(v)
+        }</span>
+
+        //获取远程配置
+        <span class="cov8" title="1">remote := d.remoteConfig.Load().(map[string]interface{})
+        if v := searchMap(remote, path); v != nil </span><span class="cov0" title="0">{
+                return NewCast(v)
+        }</span>
+
+        //获取默认值
+        <span class="cov8" title="1">return NewCast(searchMap(d.defaults, path))</span>
+}
+
+func (d *Doggie) Unmarshal(key string, v interface{}) error <span class="cov8" title="1">{
+        return d.Get(key).Unmarshal(v)
+}</span>
+
+// RegisterDecoder 注册解码器
+func RegisterDecoder(name string, dec decode.Decoder) <span class="cov0" title="0">{
+        decode.Register(name, dec)
+}</span>
+</pre>
+		
+		<pre class="file" id="file2" style="display: none">package doggie
+
+import (
+        "fmt"
+        "reflect"
+
+        "github.com/spf13/cast"
+)
+
+// deepSearch 查不到会自动创建
+func deepSearch(m map[string]any, path []string) map[string]any <span class="cov8" title="1">{
+        for _, k := range path </span><span class="cov8" title="1">{
+                m2, ok := m[k]
+                if !ok </span><span class="cov8" title="1">{
+                        // intermediate key does not exist
+                        // =&gt; create it and continue from there
+                        m3 := make(map[string]any)
+                        m[k] = m3
+                        m = m3
+                        continue</span>
+                }
+                <span class="cov8" title="1">m3, ok := m2.(map[string]any)
+                if !ok </span><span class="cov8" title="1">{
+                        // intermediate key is a value
+                        // =&gt; replace with a new map
+                        m3 = make(map[string]any)
+                        m[k] = m3
+                }</span>
+                // continue search from here
+                <span class="cov8" title="1">m = m3</span>
+        }
+        <span class="cov8" title="1">return m</span>
+}
+
+// deepCopy 深度copy,
+func deepCopy(m map[string]interface{}) map[string]interface{} <span class="cov8" title="1">{
+        m2 := make(map[string]interface{})
+        for k, v := range m </span><span class="cov8" title="1">{
+                v1, ok := v.(map[string]interface{})
+                if ok </span><span class="cov8" title="1">{
+                        m2[k] = deepCopy(v1)
+                        continue</span>
+                }
+                <span class="cov8" title="1">s1, ok := v.([]interface{})
+                if ok </span><span class="cov8" title="1">{
+                        sv := make([]interface{}, len(s1))
+                        copy(sv, s1)
+                        v = sv
+                }</span>
+                <span class="cov8" title="1">m2[k] = v</span>
+        }
+        <span class="cov8" title="1">return m2</span>
+}
+
+func merge(src, des map[string]interface{}) <span class="cov8" title="1">{
+        for k, v := range src </span><span class="cov8" title="1">{
+                sv, ok := v.(map[string]interface{})
+                if !ok </span><span class="cov8" title="1">{ //不是对象，是基础类型，直接复制
+                        des[k] = v
+                        continue</span>
+                }
+
+                <span class="cov8" title="1">dv, ok := des[k]
+                if !ok </span><span class="cov8" title="1">{ //不存在直接复制
+                        des[k] = deepCopy(sv)
+                        continue</span>
+                }
+
+                <span class="cov8" title="1">dm, ok := dv.(map[string]interface{})
+                if !ok </span><span class="cov8" title="1">{ //不是对象，不用合并，直接复制
+                        des[k] = deepCopy(sv)
+                        continue</span>
+                }
+
+                //源和目标都是对象，进行合并
+                <span class="cov8" title="1">merge(sv, dm)</span>
+        }
+}
+
+// searchMap 查找map, 不创建新数据
+func searchMap(m any, path []string) any <span class="cov8" title="1">{
+        if len(path) == 0 </span><span class="cov8" title="1">{
+                return nil
+        }</span>
+        <span class="cov8" title="1">mm, ok := m.(map[string]any)
+        if !ok </span><span class="cov8" title="1">{
+                return nil
+        }</span>
+
+        <span class="cov8" title="1">if len(path) == 1 </span><span class="cov8" title="1">{
+                return mm[path[0]]
+        }</span>
+
+        <span class="cov8" title="1">return searchMap(mm[path[0]], path[1:])</span>
+}
+
+func unmarshal(data map[string]interface{}, v interface{}) error <span class="cov8" title="1">{
+        vv := reflect.ValueOf(v)
+        if vv.Kind() != reflect.Ptr || vv.Elem().Kind() != reflect.Struct </span><span class="cov0" title="0">{
+                return fmt.Errorf("v must be a pointer to a struct")
+        }</span>
+        <span class="cov8" title="1">vv = vv.Elem()
+
+        tv := reflect.TypeOf(v).Elem()
+        for i := 0; i &lt; vv.NumField(); i++ </span><span class="cov8" title="1">{
+                vf := vv.Field(i)
+                if !vf.CanSet() </span><span class="cov0" title="0">{
+                        continue</span>
+                }
+                <span class="cov8" title="1">tf := tv.Field(i)
+                key := tf.Name
+                tag := tf.Tag.Get("doggie")
+                if tag != "" </span><span class="cov8" title="1">{
+                        key = tag
+                }</span>
+
+                <span class="cov8" title="1">val, ok := data[key]
+                if !ok </span><span class="cov0" title="0">{
+                        continue</span>
+                }
+
+                //如果是对象，看下是否是结构体
+                <span class="cov8" title="1">obj, ok := val.(map[string]interface{})
+                if ok &amp;&amp; tf.Type.Kind() == reflect.Struct </span><span class="cov8" title="1">{
+                        //如果是对象，递归解析
+                        if err := unmarshal(obj, vf.Addr().Interface()); err != nil </span><span class="cov0" title="0">{
+                                return err
+                        }</span>
+                        <span class="cov8" title="1">continue</span>
+                }
+
+                <span class="cov8" title="1">var setVal interface{}
+                var err error
+                switch vf.Interface().(type) </span>{
+                case int:<span class="cov8" title="1">
+                        setVal, err = cast.ToIntE(val)</span>
+                case int8:<span class="cov8" title="1">
+                        setVal, err = cast.ToInt8E(val)</span>
+                case int16:<span class="cov8" title="1">
+                        setVal, err = cast.ToInt16E(val)</span>
+                case int32:<span class="cov8" title="1">
+                        setVal, err = cast.ToInt32E(val)</span>
+                case int64:<span class="cov8" title="1">
+                        setVal, err = cast.ToInt64E(val)</span>
+                case uint:<span class="cov8" title="1">
+                        setVal, err = cast.ToUintE(val)</span>
+                case uint8:<span class="cov8" title="1">
+                        setVal, err = cast.ToUint8E(val)</span>
+                case uint16:<span class="cov8" title="1">
+                        setVal, err = cast.ToUint16E(val)</span>
+                case uint32:<span class="cov8" title="1">
+                        setVal, err = cast.ToUint32E(val)</span>
+                case uint64:<span class="cov8" title="1">
+                        setVal, err = cast.ToUint64E(val)</span>
+                case float32:<span class="cov8" title="1">
+                        setVal, err = cast.ToFloat32E(val)</span>
+                case float64:<span class="cov8" title="1">
+                        setVal, err = cast.ToFloat64E(val)</span>
+                case bool:<span class="cov8" title="1">
+                        setVal, err = cast.ToBoolE(val)</span>
+                case string:<span class="cov8" title="1">
+                        setVal, err = cast.ToStringE(val)</span>
+                default:<span class="cov8" title="1"> // slice
+                        if vf.Kind() != reflect.Slice </span><span class="cov0" title="0">{
+                                err = fmt.Errorf("unmarshalSlice: v is not slice: %s", key)
+                                break</span>
+                        }
+                        <span class="cov8" title="1">v, ok := val.([]interface{})
+                        if !ok </span><span class="cov0" title="0">{
+                                continue</span>
+                        }
+                        <span class="cov8" title="1">setVal, err = unmarshalSlice(key, v, vf.Interface())</span>
+
+                }
+                <span class="cov8" title="1">if err != nil </span><span class="cov0" title="0">{
+                        return err
+                }</span>
+                <span class="cov8" title="1">vf.Set(reflect.ValueOf(setVal))</span>
+        }
+        <span class="cov8" title="1">return nil</span>
+}
+
+func unmarshalSlice(name string, data []interface{}, v any) (interface{}, error) <span class="cov8" title="1">{
+        vf := reflect.TypeOf(v)
+
+        if vf.Kind() != reflect.Slice </span><span class="cov0" title="0">{
+                return nil, fmt.Errorf("unmarshalSlice: v is not a slice: %s (%s)", name, vf.Kind())
+        }</span>
+
+        <span class="cov8" title="1">item := vf.Elem()
+
+        var setVal interface{}
+        var err error
+
+        switch item.Kind() </span>{
+        case reflect.Int:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[int](data)</span>
+        case reflect.Int8:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[int8](data)</span>
+        case reflect.Int16:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[int16](data)</span>
+        case reflect.Int32:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[int32](data)</span>
+        case reflect.Int64:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[int64](data)</span>
+        case reflect.Uint:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[uint](data)</span>
+        case reflect.Uint8:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[uint8](data)</span>
+        case reflect.Uint16:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[uint16](data)</span>
+        case reflect.Uint32:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[uint32](data)</span>
+        case reflect.Uint64:<span class="cov8" title="1">
+                setVal, err = ToXIntXSliceE[uint64](data)</span>
+        case reflect.Float32:<span class="cov8" title="1">
+                setVal, err = ToFloatXSliceE[float32](data)</span>
+        case reflect.Float64:<span class="cov8" title="1">
+                setVal, err = ToFloatXSliceE[float64](data)</span>
+        case reflect.Bool:<span class="cov8" title="1">
+                setVal, err = ToBoolSlice(data)</span>
+        case reflect.String:<span class="cov8" title="1">
+                setVal, err = ToStringSlice(data)</span>
+        default:<span class="cov0" title="0">
+                return nil, fmt.Errorf("not support: %s", item.Name())</span>
+        }
+
+        <span class="cov8" title="1">return setVal, err</span>
+}
+
+type XIntX interface {
+        int |
+                int8 |
+                int16 |
+                int32 |
+                int64 |
+                uint |
+                uint8 |
+                uint16 |
+                uint32 |
+                uint64
+}
+
+type FloatX interface {
+        float32 |
+                float64
+}
+
+func ToXIntXSliceE[T XIntX](data []interface{}) ([]T, error) <span class="cov8" title="1">{
+        val, err := cast.ToIntSliceE(data)
+        if err != nil </span><span class="cov0" title="0">{
+                return nil, err
+        }</span>
+        <span class="cov8" title="1">ret := make([]T, 0, len(val))
+
+        var tmp T
+        for _, i := range val </span><span class="cov8" title="1">{
+                err = ToXIntXE(i, &amp;tmp)
+                if err != nil </span><span class="cov0" title="0">{
+                        return nil, err
+                }</span>
+                <span class="cov8" title="1">ret = append(ret, tmp)</span>
+        }
+        <span class="cov8" title="1">return ret, nil</span>
+}
+
+func ToXIntXE(data interface{}, v interface{}) error <span class="cov8" title="1">{
+        vv := reflect.ValueOf(v)
+        if vv.Kind() != reflect.Ptr || vv.IsNil() </span><span class="cov0" title="0">{
+                return fmt.Errorf("v is nil")
+        }</span>
+        <span class="cov8" title="1">val, err := cast.ToInt64E(data)
+        if err != nil </span><span class="cov0" title="0">{
+                return err
+        }</span>
+
+        <span class="cov8" title="1">switch vv.Elem().Kind() </span>{
+        case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:<span class="cov8" title="1">
+                vv.Elem().SetInt(val)</span>
+        case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:<span class="cov8" title="1">
+                vv.Elem().SetUint(uint64(val))</span>
+        }
+        <span class="cov8" title="1">return nil</span>
+}
+
+func ToFloatXSliceE[T FloatX](data interface{}) ([]T, error) <span class="cov8" title="1">{
+        val := cast.ToSlice(data)
+
+        ret := make([]T, 0, len(val))
+
+        var tmp T
+        for _, i := range val </span><span class="cov8" title="1">{
+                if err := ToFloatX(i, &amp;tmp); err != nil </span><span class="cov8" title="1">{
+                        return nil, err
+                }</span>
+                <span class="cov8" title="1">ret = append(ret, tmp)</span>
+        }
+        <span class="cov8" title="1">return ret, nil</span>
+}
+
+func ToFloatX(data interface{}, v interface{}) error <span class="cov8" title="1">{
+        vv := reflect.ValueOf(v)
+        if vv.Kind() != reflect.Ptr || vv.IsNil() </span><span class="cov0" title="0">{
+                return fmt.Errorf("v is nil")
+        }</span>
+        <span class="cov8" title="1">val, err := cast.ToFloat64E(data)
+        if err != nil </span><span class="cov8" title="1">{
+                return err
+        }</span>
+        <span class="cov8" title="1">switch vv.Elem().Kind() </span>{
+        case reflect.Float32, reflect.Float64:<span class="cov8" title="1">
+                vv.Elem().SetFloat(val)</span>
+        }
+        <span class="cov8" title="1">return nil</span>
+}
+
+func ToBoolSlice(data interface{}) ([]bool, error) <span class="cov8" title="1">{
+        val := cast.ToSlice(data)
+
+        ret := make([]bool, 0, len(val))
+
+        for _, i := range val </span><span class="cov8" title="1">{
+                b, err := cast.ToBoolE(i)
+                if err != nil </span><span class="cov8" title="1">{
+                        return nil, err
+                }</span>
+                <span class="cov8" title="1">ret = append(ret, b)</span>
+        }
+        <span class="cov8" title="1">return ret, nil</span>
+}
+
+func ToStringSlice(data interface{}) ([]string, error) <span class="cov8" title="1">{
+        val := cast.ToSlice(data)
+
+        ret := make([]string, 0, len(val))
+
+        for _, i := range val </span><span class="cov8" title="1">{
+                b, err := cast.ToStringE(i)
+                if err != nil </span><span class="cov8" title="1">{
+                        return nil, err
+                }</span>
+                <span class="cov8" title="1">ret = append(ret, b)</span>
+        }
+        <span class="cov8" title="1">return ret, nil</span>
+}
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>
