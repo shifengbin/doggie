@@ -1,9 +1,9 @@
 package decode
 
 import (
-	"doggie/internal/decode/json"
-	"doggie/internal/decode/toml"
-	"doggie/internal/decode/yml"
+	"github.com/shifengbin/doggie/internal/decode/json"
+	"github.com/shifengbin/doggie/internal/decode/toml"
+	"github.com/shifengbin/doggie/internal/decode/yml"
 )
 
 type Decoder interface {

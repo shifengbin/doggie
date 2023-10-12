@@ -1,11 +1,12 @@
 package doggie
 
 import (
-	"doggie/internal/decode"
-	"doggie/internal/flags"
 	"io"
 	"log"
 	"path/filepath"
+
+	"github.com/shifengbin/doggie/internal/decode"
+	"github.com/shifengbin/doggie/internal/flags"
 
 	"fmt"
 	"os"

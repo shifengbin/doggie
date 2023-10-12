@@ -1,9 +1,10 @@
 package main
 
 import (
-	"doggie"
 	"log"
 	"time"
+
+	"github.com/shifengbin/doggie"
 )
 
 func main() {

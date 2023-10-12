@@ -1,4 +1,4 @@
-module doggie
+module github.com/shifengbin/doggie
 
 go 1.21.1
 
