@@ -108,7 +108,7 @@ func unmarshal(data map[string]interface{}, v interface{}) error {
 			continue
 		}
 		tf := tv.Field(i)
-		key := tf.Name
+		key := firstToLower(tf.Name)
 		tag := tf.Tag.Get("doggie")
 		if tag != "" {
 			key = tag
@@ -342,4 +342,17 @@ func ToStringSlice(data interface{}) ([]string, error) {
 		ret = append(ret, b)
 	}
 	return ret, nil
+}
+
+// firstToLower 首字母小写
+// 用来处理结构体字段名，所以可认为都是ascii,别的情况不考虑
+func firstToLower(s string) string {
+	if s == "" {
+		return ""
+	}
+	ss := []byte(s)
+	if ss[0] >= 'A' && ss[0] <= 'Z' {
+		ss[0] += 'a' - 'A'
+	}
+	return string(ss)
 }

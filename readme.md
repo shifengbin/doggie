@@ -205,3 +205,19 @@ func NewHttpProvider(url string) *HttpProvider {
 	}()
 	time.Sleep(time.Minute)
 ```
+
+### 通过结构体解析
+默认解析名称为字段名首字母小写，如果自定义请使用tag, `doggie:"xxx"`
+```go
+//下面的会解析key为name,age的配置
+type DefaultNameConfig struct {
+	Name string
+	Age  int
+}
+
+//下面可以自定义, Name, Age
+type CustomNameConfig struct {
+	Name string `doggie:"Name"`
+	Age  int `doggie:"Age"`
+}
+```
