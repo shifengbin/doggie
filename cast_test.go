@@ -251,7 +251,7 @@ func TestCast_Obj(t *testing.T) {
 			c := &Cast{
 				value: tt.fields.value,
 			}
-			if got := c.Obj(tt.args.key); !reflect.DeepEqual(got, tt.want) {
+			if got := c.Get(tt.args.key); !reflect.DeepEqual(got, tt.want) {
 				t.Errorf("Cast.Obj() = %v, want %v", got, tt.want)
 			}
 		})

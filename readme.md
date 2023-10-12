@@ -82,7 +82,7 @@ Doggy是一个配置管理工具，支持多种配置源，支持多种配置格
 13. Float32() 把值转换为float32
 14. Float64() 把值转换为float64
 15. Keys() 获取map key
-16. Obj(key string) Caster 获取map key对应的值
+16. Get(key string) Caster 获取map key对应的值
 17. Unmarshal(obj interface{}) error 把值转换为struct
 18. Len() 获取map或者slice的length
 19. Idx(idx int) Caster 获取slice对应值

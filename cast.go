@@ -37,7 +37,7 @@ type Caster interface {
 	//返回map key
 	Keys() []string
 	//获取map key对应的值
-	Obj(key string) Caster
+	Get(key string) Caster
 	//map转struct
 	Unmarshal(obj interface{}) error
 
@@ -125,7 +125,7 @@ func (c *Cast) Keys() []string {
 }
 
 // Obj 获取map key对应的值
-func (c *Cast) Obj(key string) Caster {
+func (c *Cast) Get(key string) Caster {
 	m := cast.ToStringMap(c.value)
 	return &Cast{m[key]}
 }

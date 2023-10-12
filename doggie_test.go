@@ -28,7 +28,7 @@ func TestDoggie_SetDefault(t *testing.T) {
 		t.Fail()
 	}
 
-	if d := dog.Get("d").Obj("e").Float64(); d != 1.1 {
+	if d := dog.Get("d").Get("e").Float64(); d != 1.1 {
 		t.Log("Get d Want 1.1, but:", d)
 		t.Fail()
 	}
@@ -76,7 +76,7 @@ func TestConfig(t *testing.T) {
 		t.Log("Get d Want empty, but:", vv)
 		t.Fail()
 	}
-	if vv := v.Obj("e").Idx(1).Int(); vv != 2 {
+	if vv := v.Get("e").Idx(1).Int(); vv != 2 {
 		t.Log("Get d.e[1] Want 2, but:", vv)
 		t.Fail()
 	}
@@ -112,7 +112,7 @@ func TestConfigType(t *testing.T) {
 		t.Log("Get d Want empty, but:", vv)
 		t.Fail()
 	}
-	if vv := v.Obj("e").Idx(1).Int(); vv != 2 {
+	if vv := v.Get("e").Idx(1).Int(); vv != 2 {
 		t.Log("Get d.e[1] Want 2, but:", vv)
 		t.Fail()
 	}
@@ -150,7 +150,7 @@ func TestConfigJSON(t *testing.T) {
 		t.Log("Get d Want empty, but:", vv)
 		t.Fail()
 	}
-	if vv := v.Obj("e").Idx(1).Int(); vv != 2 {
+	if vv := v.Get("e").Idx(1).Int(); vv != 2 {
 		t.Log("Get d.e[1] Want 2, but:", vv)
 		t.Fail()
 	}
