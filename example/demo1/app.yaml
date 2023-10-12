@@ -1,0 +1,13 @@
+httpPort: 8080
+grpcPort: 9090
+
+worker:
+  name: "worker1"
+  maxWorkers: 10
+  maxIdleWorkers: 10
+  maxQueueSize: 100
+  
+  workerWeight:
+    - 1
+    - 1
+    - 10
