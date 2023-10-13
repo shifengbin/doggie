@@ -62,7 +62,14 @@ func main() {
 		log.Println(key, w.Get(key).String())
 	}
 
+	//解码一个切片
+	var uints []uint
+	if err := dog.Get("worker.workerWeight").Unmarshal(&uints); err != nil {
+		log.Println(err)
+	}
+	log.Println(uints)
 }
+
 ```
 
 其他可参考example文件夹的例子

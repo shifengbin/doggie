@@ -1,6 +1,6 @@
 module github.com/shifengbin/doggie
 
-go 1.21.1
+go 1.18
 
 require (
 	github.com/fsnotify/fsnotify v1.6.0
