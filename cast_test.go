@@ -476,3 +476,18 @@ func TestCast_Unmarshal(t *testing.T) {
 		t.Error("Unmarshal() error = nil, want error")
 	}
 }
+
+func Test_unmarshalToSlice(t *testing.T) {
+	c := &Cast{
+		value: []interface{}{3, 2, 3},
+	}
+	v := []uint{}
+
+	target := []uint{3, 2, 3}
+	if err := c.Unmarshal(&v); err != nil {
+		t.Errorf("Unmarshal() error = %v", err)
+	}
+	if !reflect.DeepEqual(v, target) {
+		t.Errorf("unmarshal() = %v, want %v", v, target)
+	}
+}

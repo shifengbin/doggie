@@ -55,4 +55,9 @@ func main() {
 		log.Println(key, w.Get(key).String())
 	}
 
+	var uints []uint
+	if err := dog.Get("worker.workerWeight").Unmarshal(&uints); err != nil {
+		log.Println(err)
+	}
+	log.Println(uints)
 }

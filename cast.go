@@ -155,6 +155,16 @@ func (c *Cast) Unmarshal(v interface{}) error {
 	switch t := c.value.(type) {
 	case map[string]interface{}:
 		err = unmarshal(t, v)
+	case []interface{}:
+		vo := reflect.ValueOf(v)
+		if vo.Kind() != reflect.Ptr || vo.IsNil() || vo.Elem().Kind() != reflect.Slice {
+			err = fmt.Errorf("unmarshal slice must be a pointer")
+			break
+		}
+		val, err := unmarshalSlice(vo.Type().Name(), t, vo.Elem().Interface())
+		if err == nil {
+			vo.Elem().Set(reflect.ValueOf(val))
+		}
 	default:
 		err = fmt.Errorf("unsupport unmarsharl %s", reflect.TypeOf(v).Name())
 	}
